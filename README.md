@@ -1,2 +1,2 @@
 # -Client-Invoice-Generator
-#four subparts and combined to form the final code.
+# -To build a basic Invoice generator
