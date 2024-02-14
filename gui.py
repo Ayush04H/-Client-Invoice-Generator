@@ -85,50 +85,53 @@ comp_pan_label_entry.grid(row=3, column=1)
 
 
 # --------------------------------------------------#
-
 # B. PERSONAL BRANDING INFO
 personal_branding_info = LabelFrame(frame, text="Personal Branding:")
 personal_branding_info.grid(row=2, column=0, sticky="news", padx=10, pady=10)
 
-# contents of personal branding info
 method_1 = StringVar(value="Personal Branding")
 personal_branding_choices = {
     "LinkedIn Profile Audit and Update": 1000,
     "Market Research": 2000,
     "Market Strategy": 5000
 }
-# personal_branding_label = Label(personal_branding_info, text="Personal Branding:")
-# personal_branding_label.grid(row=0, column=0)
-personal_branding_listbox = Listbox(personal_branding_info, selectmode=EXTENDED, width=30, height=3)
-for choice in personal_branding_choices.keys():
-    personal_branding_listbox.insert(END, choice)
-personal_branding_listbox.grid(row=0, column=0, padx=5, pady=10)
 
+# Create a list to store selected services
+service_1 = []
+
+# Function to calculate the subtotal and update the list of selected services
 def calculate_first_subtotal():
     first_subtotal = 0
-    # for listbox in [personal_branding_listbox, content_marketing_listbox, lead_generation_listbox, web_development_listbox]:
-    for listbox in [personal_branding_listbox]:
-        selected_indices = listbox.curselection()
-        if selected_indices:
-            for idx in selected_indices:
-                choice = listbox.get(idx)
-                if choice in personal_branding_choices:
-                    first_subtotal += personal_branding_choices[choice]
-
+    service_1.clear()  # Clear the list before updating it
+    for idx, (choice, value) in enumerate(personal_branding_choices.items()):
+        is_checked = var_list[idx].get()
+        if is_checked:
+            service_1.append(choice)
+            first_subtotal += value
 
     first_subtotal_textbox.delete(1.0, END)
     first_subtotal_textbox.insert(END, str(first_subtotal))
 
+    print(service_1)
+
     return first_subtotal
 
 
+# Create Checkbuttons for personal branding choices
+var_list = []  # List to store IntVar for each Checkbutton
+for idx, (choice, value) in enumerate(personal_branding_choices.items()):
+    var = IntVar()
+    var_list.append(var)
+    check_button = Checkbutton(personal_branding_info, text=choice, variable=var)
+    check_button.grid(row=idx, column=0, padx=5, pady=5)
 
-first_subtotal_textbox = Text(personal_branding_info, height=1, width=10)
-first_subtotal_textbox.grid(row=0, column=1, padx=5, pady=5)
-
-
+# Button to calculate subtotal
 first_total_button = Button(personal_branding_info, text="Calculate Subtotal", command=calculate_first_subtotal)
-first_total_button.grid(row=0, column=2, padx=5, pady=5)
+first_total_button.grid(row=len(personal_branding_choices), column=0, columnspan=2, pady=10)
+
+# Textbox for displaying the subtotal
+first_subtotal_textbox = Text(personal_branding_info, height=1, width=10)
+first_subtotal_textbox.grid(row=len(personal_branding_choices), column=2, padx=5, pady=5)
 
 
 # C. CONTENT MARKETING INFO
@@ -143,38 +146,47 @@ content_marketing_choices = {
     "Content Calendar Prep": 7000,
     "Social Media Management": 4000
 }
-content_marketing_listbox = Listbox(content_marketing_info, selectmode=EXTENDED, width=30, height=3)
-for choice in content_marketing_choices.keys():
-    content_marketing_listbox.insert(END, choice)
-content_marketing_listbox.grid(row=0, column=0, padx=5, pady=10)
 
+# Create a list to store selected services
+service_2 = []
+
+# Function to calculate the subtotal and update the list of selected services
 def calculate_second_subtotal():
     second_subtotal = 0
-    # for listbox in [personal_branding_listbox, content_marketing_listbox, lead_generation_listbox, web_development_listbox]:
-    for listbox in [content_marketing_listbox]:
-        selected_indices = listbox.curselection()
-        if selected_indices:
-            for idx in selected_indices:
-                choice = listbox.get(idx)
-                if choice in content_marketing_choices:
-                    second_subtotal += content_marketing_choices[choice]
+    service_2.clear()  # Clear the list before updating it
+    for idx, (choice, value) in enumerate(content_marketing_choices.items()):
+        is_checked = var_list[idx].get()
+        if is_checked:
+            service_2.append(choice)
+            second_subtotal += value
 
     second_subtotal_textbox.delete(1.0, END)
     second_subtotal_textbox.insert(END, str(second_subtotal))
 
+    print(service_2)
+
     return second_subtotal
 
 
-second_subtotal_textbox = Text(content_marketing_info, height=1, width=10)
-second_subtotal_textbox.grid(row=0, column=1, padx=5, pady=5)
+# Create Checkbuttons for content marketing choices
+var_list = []  # List to store IntVar for each Checkbutton
+for idx, (choice, value) in enumerate(content_marketing_choices.items()):
+    var = IntVar()
+    var_list.append(var)
+    check_button = Checkbutton(content_marketing_info, text=choice, variable=var)
+    check_button.grid(row=idx, column=0, padx=5, pady=5)
 
-
+# Button to calculate subtotal
 second_total_button = Button(content_marketing_info, text="Calculate Subtotal", command=calculate_second_subtotal)
-second_total_button.grid(row=0, column=2, padx=5, pady=5)
+second_total_button.grid(row=len(content_marketing_choices), column=0, columnspan=2, pady=10)
+
+# Textbox for displaying the subtotal
+second_subtotal_textbox = Text(content_marketing_info, height=1, width=10)
+second_subtotal_textbox.grid(row=len(content_marketing_choices), column=2, padx=5, pady=5)
 
 # D. LEAD GENERATION INFO
 lead_generation_info = LabelFrame(frame, text="Lead Generation:")
-lead_generation_info.grid(row=3, column=0, sticky="news", padx=10, pady=10)
+lead_generation_info.grid(row=0, column=0, sticky="news", padx=10, pady=10)
 
 method_3 = StringVar(value="Lead Generation")
 lead_generation_choices = {
@@ -183,34 +195,45 @@ lead_generation_choices = {
     "DM Marketing": 9000,
     "Email Marketing": 3000
 }
-lead_generation_listbox = Listbox(lead_generation_info, selectmode=EXTENDED, width=30, height=3)
-for choice in lead_generation_choices.keys():
-    lead_generation_listbox.insert(END, choice)
-lead_generation_listbox.grid(row=0, column=0, padx=5, pady=10)
 
+# Create a list to store selected services
+service_3 = []
+
+# Function to calculate the subtotal and update the list of selected services
 def calculate_third_subtotal():
     third_subtotal = 0
-    # for listbox in [personal_branding_listbox, content_marketing_listbox, lead_generation_listbox, web_development_listbox]:
-    for listbox in [lead_generation_listbox]:
-        selected_indices = listbox.curselection()
-        if selected_indices:
-            for idx in selected_indices:
-                choice = listbox.get(idx)
-                if choice in lead_generation_choices:
-                    third_subtotal += lead_generation_choices[choice]
+    service_3.clear()  # Clear the list before updating it
+    for idx, (choice, value) in enumerate(lead_generation_choices.items()):
+        is_checked = var_list[idx].get()
+        if is_checked:
+            service_3.append(choice)
+            third_subtotal += value
 
     third_subtotal_textbox.delete(1.0, END)
     third_subtotal_textbox.insert(END, str(third_subtotal))
 
-    return third_subtotal
+    print(service_3)
+
+    return float(third_subtotal)
 
 
-third_subtotal_textbox = Text(lead_generation_info, height=1, width=10)
-third_subtotal_textbox.grid(row=0, column=1, padx=5, pady=5)
 
+# Create Checkbuttons for lead generation choices
+var_list = []  # List to store IntVar for each Checkbutton
+for idx, (choice, value) in enumerate(lead_generation_choices.items()):
+    var = IntVar()
+    var_list.append(var)
+    check_button = Checkbutton(lead_generation_info, text=choice, variable=var)
+    check_button.grid(row=idx, column=0, padx=5, pady=5)
 
+# Button to calculate subtotal
 third_total_button = Button(lead_generation_info, text="Calculate Subtotal", command=calculate_third_subtotal)
-third_total_button.grid(row=0, column=2, padx=5, pady=5)
+third_total_button.grid(row=len(lead_generation_choices), column=0, columnspan=2, pady=10)
+
+# Textbox for displaying the subtotal
+third_subtotal_textbox = Text(lead_generation_info, height=1, width=10)
+third_subtotal_textbox.grid(row=len(lead_generation_choices), column=2, padx=5, pady=5)
+
 
 
 
@@ -224,34 +247,43 @@ web_development_choices = {
     "Copywriting": 1000,
     "Launch and Post Launch Support": 1000
 }
-web_development_listbox = Listbox(web_dev_info, selectmode=EXTENDED, width=30, height=3)
-for choice in web_development_choices.keys():
-    web_development_listbox.insert(END, choice)
-web_development_listbox.grid(row=0, column=0, padx=5, pady=10)
 
+# Create a list to store selected services
+service_4 = []
+
+# Function to calculate the subtotal and update the list of selected services
 def calculate_fourth_subtotal():
     fourth_subtotal = 0
-    # for listbox in [personal_branding_listbox, content_marketing_listbox, lead_generation_listbox, web_development_listbox]:
-    for listbox in [web_development_listbox]:
-        selected_indices = listbox.curselection()
-        if selected_indices:
-            for idx in selected_indices:
-                choice = listbox.get(idx)
-                if choice in web_development_choices:
-                    fourth_subtotal += web_development_choices[choice]
+    service_4.clear()  # Clear the list before updating it
+    for idx, (choice, value) in enumerate(web_development_choices.items()):
+        is_checked = var_list[idx].get()
+        if is_checked:
+            service_4.append(choice)
+            fourth_subtotal += value
 
     fourth_subtotal_textbox.delete(1.0, END)
     fourth_subtotal_textbox.insert(END, str(fourth_subtotal))
 
+    print(service_4)
+
     return fourth_subtotal
 
 
-fourth_subtotal_textbox = Text(web_dev_info, height=1, width=10)
-fourth_subtotal_textbox.grid(row=0, column=1, padx=5, pady=5)
+# Create Checkbuttons for web development choices
+var_list = []  # List to store IntVar for each Checkbutton
+for idx, (choice, value) in enumerate(web_development_choices.items()):
+    var = IntVar()
+    var_list.append(var)
+    check_button = Checkbutton(web_dev_info, text=choice, variable=var)
+    check_button.grid(row=idx, column=0, padx=5, pady=5)
 
-
+# Button to calculate subtotal
 fourth_total_button = Button(web_dev_info, text="Calculate Subtotal", command=calculate_fourth_subtotal)
-fourth_total_button.grid(row=0, column=2, padx=5, pady=5)
+fourth_total_button.grid(row=len(web_development_choices), column=0, columnspan=2, pady=10)
+
+# Textbox for displaying the subtotal
+fourth_subtotal_textbox = Text(web_dev_info, height=1, width=10)
+fourth_subtotal_textbox.grid(row=len(web_development_choices), column=2, padx=5, pady=5)
 
 
 
