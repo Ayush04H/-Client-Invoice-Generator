@@ -325,9 +325,9 @@ def enter_data():
         end_date_con=end_date_con+timedelta(days=15)
         date_con=date_con+timedelta(days=15)
         doc.render({"name_company": comp_name, "address": comp_add, "pan": comp_pan, "gst_no": comp_gst,
-                "end_date": end_date_con, "beginning_date": beg_date_con,
-                "inv_no": str(x), "inv_date": date_con,
-                
+                    
+                "end_date": end_date_con.date(), "beginning_date": beg_date_con.date(),
+                "inv_no": str(x), "inv_date": date_con.date(),
                 "subtotal": subtotal,
                 "gst": gsttotal,
                 "total": total,
