@@ -1,10 +1,13 @@
+import os
 from tkinter import *
 from tkcalendar import DateEntry
-from tkinter import ttk
 from docxtpl import DocxTemplate
 from tkinter import messagebox
-from datetime import datetime
-from datetime import timedelta 
+from datetime import datetime,timedelta
+
+directory_path = "receipt"
+os.makedirs(directory_path, exist_ok=True)
+
 
 root = Tk()
 root.geometry("1500x600")
@@ -336,7 +339,9 @@ def enter_data():
     end_date_con=datetime.strptime(end_date,'%d-%m-%Y')
     date_con=datetime.strptime(date,'%d-%m-%Y')
     doc_name = comp_name + " - 1 dated from " + beg_date_con.date().strftime('%d-%m-%Y') + ' - ' + end_date_con.date().strftime('%d-%m-%Y') + " .docx"
-    doc.save(doc_name)
+
+    doc_path = os.path.join(directory_path, doc_name)
+    doc.save(doc_path)
    
     for x in range(2,7,1):
         
@@ -374,7 +379,11 @@ def enter_data():
         context["services"] = [service for service in context["services"] if service["title"] == selected_service_title]
         doc_name = comp_name +  " - " + str(x) + " dated from " + beg_date_con.date().strftime('%d-%m-%Y') + ' - ' + end_date_con.date().strftime('%d-%m-%Y') + " .docx"
 
-        doc.save(doc_name)
+        doc_path = os.path.join(directory_path, doc_name)
+
+        # Save the document with the specified file path
+        doc.save(doc_path)
+
     messagebox.showinfo("Invoice Complete", "Invoice Complete")
 
 
