@@ -331,12 +331,12 @@ def enter_data():
 
 # Filter the services list to only include the selected service
     context["services"] = [service for service in context["services"] if service["title"] == selected_service_title]
-    doc_name = comp_name + " 1 "  + " .docx"
-    doc.save(doc_name)
-    messagebox.showinfo("Invoice Complete", "Invoice Complete")
+
     beg_date_con=datetime.strptime(beg_date, '%d-%m-%Y')
     end_date_con=datetime.strptime(end_date,'%d-%m-%Y')
     date_con=datetime.strptime(date,'%d-%m-%Y')
+    doc_name = comp_name + " - 1 dated from " + beg_date_con.date().strftime('%d-%m-%Y') + ' - ' + end_date_con.date().strftime('%d-%m-%Y') + " .docx"
+    doc.save(doc_name)
    
     for x in range(2,7,1):
         
@@ -344,8 +344,8 @@ def enter_data():
         end_date_con=end_date_con+timedelta(days=15)
         date_con=date_con+timedelta(days=15)
         context={"name_company": comp_name, "address": comp_add, "pan": comp_pan, "gst_no": comp_gst,
-                 "beginning_date": beg_date_con.date(),"end_date": end_date_con.date(),
-                "inv_no": str(x), "inv_date": date_con.date(),
+                 "beginning_date": beg_date_con.date().strftime('%d-%m-%Y'),"end_date": end_date_con.date().strftime('%d-%m-%Y'),
+                "inv_no": str(x), "inv_date": date_con.date().strftime('%d-%m-%Y'),
                 "services": [
                         {
                         "title": "Personal Branding (1 Account)",
@@ -372,9 +372,10 @@ def enter_data():
                # "web_lists":web,"lead_list":lead,"cont_list":cont,"per_list":per}
         doc.render(context)
         context["services"] = [service for service in context["services"] if service["title"] == selected_service_title]
-        doc_name = comp_name + " " + str(x) + " .docx"
+        doc_name = comp_name +  " - " + str(x) + " dated from " + beg_date_con.date().strftime('%d-%m-%Y') + ' - ' + end_date_con.date().strftime('%d-%m-%Y') + " .docx"
+
         doc.save(doc_name)
-        messagebox.showinfo("Invoice Complete", "Invoice Complete")
+    messagebox.showinfo("Invoice Complete", "Invoice Complete")
 
 
 
