@@ -1,0 +1,6 @@
+-pip install tkinter
+-pip install tkcalendar 
+-pip install docxtpl
+-pip install datetime 
+-pip install babel.numbers
+
