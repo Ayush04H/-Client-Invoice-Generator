@@ -86,9 +86,9 @@ personal_branding_info.grid(row=1, column=0, sticky="news", padx=10, pady=10)
 # contents of personal branding info
 method_1 = StringVar(value="Personal Branding")
 personal_branding_choices = {
-    "1. LinkedIn Profile Audit and Update": 1000,
-    "2. Market Research": 2000,
-    "3. Market Strategy": 5000
+    "LinkedIn Profile Audit and Update": 1000,
+    "Market Research": 2000,
+    "Market Strategy": 5000
 }
 # personal_branding_label = Label(personal_branding_info, text="Personal Branding:")
 # personal_branding_label.grid(row=0, column=0)
@@ -97,8 +97,9 @@ for choice in personal_branding_choices.keys():
     personal_branding_listbox.insert(END, choice)
 personal_branding_listbox.grid(row=0, column=0, padx=5, pady=10)
 
-
+list1=[]
 def calculate_first_subtotal():
+    global list1
     first_subtotal = 0
     first_list = []
     # for listbox in [personal_branding_listbox, content_marketing_listbox, lead_generation_listbox, web_development_listbox]:
@@ -118,7 +119,7 @@ def calculate_first_subtotal():
     first_list_text.insert(END, str(first_list))
 
     # print(choice_1)
-
+    list1=first_list.copy()
     return first_subtotal
 
 
@@ -140,19 +141,20 @@ content_marketing_info.grid(row=1, column=1, sticky="news", padx=10, pady=10)
 
 method_2 = StringVar(value="Content Marketing")
 content_marketing_choices = {
-    "1. Content Writing": 1000,
-    "2. Content Designing": 2000,
-    "3. Video Editing": 3000,
-    "4. Content Calendar Prep": 7000,
-    "5. Social Media Management": 4000
+    "Content Writing": 1000,
+    "Content Designing": 2000,
+    "Video Editing": 3000,
+    "Content Calendar Prep": 7000,
+    "Social Media Management": 4000
 }
 content_marketing_listbox = Listbox(content_marketing_info, selectmode=EXTENDED, width=40, height=3)
 for choice in content_marketing_choices.keys():
     content_marketing_listbox.insert(END, choice)
 content_marketing_listbox.grid(row=0, column=0, padx=5, pady=10)
 
-
+list2=[]
 def calculate_second_subtotal():
+    global list2
     second_subtotal = 0
     second_list = []
     # for listbox in [personal_branding_listbox, content_marketing_listbox, lead_generation_listbox, web_development_listbox]:
@@ -166,12 +168,10 @@ def calculate_second_subtotal():
                     second_list.append(choice_2)
     second_subtotal_textbox.delete(1.0, END)
     second_subtotal_textbox.insert(END, str(second_subtotal))
-
     second_list_text.delete(1.0, END)
     second_list_text.insert(END, str(second_list))
-
+    list2=second_list.copy()
     return second_subtotal
-
 
 second_list_text = Text(content_marketing_info, height=5, width=40)
 second_list_text.grid(row=1, column=0, padx=5, pady=5)
@@ -190,18 +190,19 @@ lead_generation_info.grid(row=1, column=2, sticky="news", padx=10, pady=10)
 
 method_3 = StringVar(value="Lead Generation")
 lead_generation_choices = {
-    "1. Lead Scraping and Filtering": 1000,
-    "2. Comment Engine": 8000,
-    "3. DM Marketing": 9000,
-    "4. Email Marketing": 3000
+    "Lead Scraping and Filtering": 1000,
+    "Comment Engine": 8000,
+    "DM Marketing": 9000,
+    "Email Marketing": 3000
 }
 lead_generation_listbox = Listbox(lead_generation_info, selectmode=EXTENDED, width=40, height=3)
 for choice in lead_generation_choices.keys():
     lead_generation_listbox.insert(END, choice)
 lead_generation_listbox.grid(row=0, column=0, padx=5, pady=10)
 
-
+list3=[]
 def calculate_third_subtotal():
+    global list3
     third_subtotal = 0
     third_list = []
     # for listbox in [personal_branding_listbox, content_marketing_listbox, lead_generation_listbox, web_development_listbox]:
@@ -219,7 +220,7 @@ def calculate_third_subtotal():
 
     third_list_text.delete(1.0, END)
     third_list_text.insert(END, str(third_list))
-
+    list3=third_list.copy()
     return third_subtotal
 
 
@@ -240,17 +241,18 @@ web_dev_info.grid(row=1, column=3, sticky="news", padx=10, pady=10)
 
 method_4 = StringVar(value="Web Development")
 web_development_choices = {
-    "1. UI/UX Design": 1000,
-    "2. Copywriting": 1000,
-    "3. Launch and Post Launch Support": 1000
+    "UI/UX Design": 1000,
+    "Copywriting": 1000,
+    "Launch and Post Launch Support": 1000
 }
 web_development_listbox = Listbox(web_dev_info, selectmode=EXTENDED, width=40, height=3)
 for choice in web_development_choices.keys():
     web_development_listbox.insert(END, choice)
 web_development_listbox.grid(row=0, column=0, padx=5, pady=10)
 
-
+list4=[]
 def calculate_fourth_subtotal():
+    global list4
     fourth_subtotal = 0
     fourth_list = []
     # for listbox in [personal_branding_listbox, content_marketing_listbox, lead_generation_listbox, web_development_listbox]:
@@ -268,7 +270,7 @@ def calculate_fourth_subtotal():
 
     fourth_list_text.delete(1.0, END)
     fourth_list_text.insert(END, str(fourth_list))
-
+    list4=fourth_list.copy()
     return fourth_subtotal
 
 
@@ -286,10 +288,9 @@ fourth_total_button.grid(row=2, column=0, padx=5, pady=5)
 
 def enter_data():
     doc = DocxTemplate("Sample Invoice_1.docx")
-    beg_date = beginning_date_entry.get()
-    print(type(beg_date))
-    end_date = end_date_entry.get()
-    date = date_entry.get()
+    beg_date = beginning_date_entry.get_date().strftime('%d-%m-%Y')
+    end_date = end_date_entry.get_date().strftime('%d-%m-%Y')
+    date = date_entry.get_date().strftime('%d-%m-%Y')
     invoice_no = invoice_entry.get()
     comp_name = comp_name_label_entry.get()
     comp_add = comp_addr_label_entry.get()
@@ -299,20 +300,38 @@ def enter_data():
     gsttotal = gst_textbox.get("1.0", END)
     total = total_textbox.get("1.0", END)
 
-    per = first_list_text.get("1.0", "end-1c")
-    cont = second_list_text.get("1.0", "end-1c")
-    lead = third_list_text.get("1.0", "end-1c")
-    web = fourth_list_text.get("1.0", "end-1c")
-    doc.render({"name_company": comp_name, "address": comp_add, "pan": comp_pan, "gst_no": comp_gst,
-                "end_date": end_date, "beginning_date": beg_date,
+    context={"name_company": comp_name, "address": comp_add, "pan": comp_pan, "gst_no": comp_gst,
+                 "beginning_date": beg_date,"end_date": end_date,
                 "inv_no": "1", "inv_date": date,
-                
-                "subtotal": subtotal,
-                "gst": gsttotal,
+                "services": [
+            {
+                "title": "Personal Branding (1 Account)",
+                "details": list1
+            },
+            {
+                "title": "Content Marketing (30 pieces of content)",
+                "details": list2
+            },
+            {
+                "title": "Content writing",
+                "details": list3
+            },
+            {
+                "title": "Web Development",
+                "details": list4
+            }
+              ],
+                "sum_total": subtotal_glob,
+                "gst_val": gsttotal,
                 "total": total,
-                "amt_payable": total,
-                "web_lists":web,"lead_list":lead,"cont_list":cont,"per_list":per})
-    doc_name = "new_invoice" + " 1 "  + " .docx"
+                "amt_payable": total}
+                #"web_lists":web,"lead_list":lead,"cont_list":cont,"per_list":per}
+    doc.render(context)
+    selected_service_title = "Content Marketing (30 pieces of content)"
+
+# Filter the services list to only include the selected service
+    context["services"] = [service for service in context["services"] if service["title"] == selected_service_title]
+    doc_name = comp_name + " 1 "  + " .docx"
     doc.save(doc_name)
     messagebox.showinfo("Invoice Complete", "Invoice Complete")
     beg_date_con=datetime.strptime(beg_date, '%d-%m-%Y')
@@ -324,16 +343,36 @@ def enter_data():
         beg_date_con=beg_date_con+timedelta(days=15) 
         end_date_con=end_date_con+timedelta(days=15)
         date_con=date_con+timedelta(days=15)
-        doc.render({"name_company": comp_name, "address": comp_add, "pan": comp_pan, "gst_no": comp_gst,
-                    
-                "end_date": end_date_con.date(), "beginning_date": beg_date_con.date(),
+        context={"name_company": comp_name, "address": comp_add, "pan": comp_pan, "gst_no": comp_gst,
+                 "beginning_date": beg_date_con.date(),"end_date": end_date_con.date(),
                 "inv_no": str(x), "inv_date": date_con.date(),
-                "subtotal": subtotal,
-                "gst": gsttotal,
+                "services": [
+                        {
+                        "title": "Personal Branding (1 Account)",
+                        "details": list1
+                        },
+                        {
+                        "title": "Content Marketing (30 pieces of content)",
+                        "details": list2
+                        },
+                        {
+                        "title": "Content writing",
+                        "details": list3
+                        },
+                        {
+                        "title": "Web Development",
+                        "details": list4
+                        }
+           
+              ],
+                "sum_total": subtotal_glob,
+                "gst_val": gsttotal,
                 "total": total,
-                "amt_payable": total,
-                "web_lists":web,"lead_list":lead,"cont_list":cont,"per_list":per})
-        doc_name = "new_invoice" + " " + str(x) + " .docx"
+                "amt_payable": total}
+               # "web_lists":web,"lead_list":lead,"cont_list":cont,"per_list":per}
+        doc.render(context)
+        context["services"] = [service for service in context["services"] if service["title"] == selected_service_title]
+        doc_name = comp_name + " " + str(x) + " .docx"
         doc.save(doc_name)
         messagebox.showinfo("Invoice Complete", "Invoice Complete")
 
@@ -341,7 +380,9 @@ def enter_data():
 
 
 # C. Billing
+subtotal_glob=0
 def calculate_subtotal():
+    global subtotal_glob
     subtotal = 0
     first_subtotal = float(first_subtotal_textbox.get("1.0", END)) if first_subtotal_textbox.get("1.0",
                                                                                                  END).strip() else 0.0
@@ -356,6 +397,7 @@ def calculate_subtotal():
 
     subtotal_textbox.delete(1.0, END)
     subtotal_textbox.insert(END, str(subtotal))
+    subtotal_glob=subtotal
     return subtotal
 
 
@@ -425,6 +467,6 @@ calculate_total_button.grid(row=2, column=2, padx=5, pady=5)
 # FINAL BUTTON
 button = Button(frame, text="Enter Data", command=enter_data)
 button.grid(row=3, column=1)
-
+print(list2)
 # --------------------------------------#
 mainloop()
